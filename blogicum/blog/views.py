@@ -54,10 +54,12 @@ def index(request):
 
 def post_detail(request, id):
     template = 'blog/detail.html'
-    for post in posts:
+    for position, post in enumerate(posts):
         if id == post['id']:
-            context = {'post': posts[id]}
+            context = {'post': posts[position]}
             break
+        else:
+            continue
     return render(request, template, context)
 
 
