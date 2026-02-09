@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 
 
@@ -46,25 +47,21 @@ posts = [
 
 
 def index(request):
-    reversed_posts = posts[::-1]
-    template = 'blog/index.html'
+    reversed_posts = reversed(posts)
     context = {'posts': reversed_posts}
-    return render(request, template, context)
+    return render(request, 'blog/index.html', context)
+
+
+post_dict = {post['id']: post for post in posts}
 
 
 def post_detail(request, id):
-    template = 'blog/detail.html'
-    for position, post in enumerate(posts):
-        if id == post['id']:
-            context = {'post': posts[position]}
-            break
-        else:
-            continue
-    return render(request, template, context)
+    if post_dict.get(id) is None:
+        raise Http404(f"Пост с таким {id} не определен.")
+    context = {'post': post_dict.get(id)}
+    return render(request, 'blog/detail.html', context)
 
 
 def category_posts(request, category_slug):
-    template = 'blog/category.html'
-    category = category_slug
-    context = {'category': category}
-    return render(request, template, context)
+    context = {'category': category_slug}
+    return render(request, 'blog/category.html', context)
