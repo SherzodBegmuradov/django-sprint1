@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}
-	{{ post.location }}. {{ post.date }}
+  {{ post.location }}. {{ post.date }}
 {% endblock %}
 {% block content %}
-	<article>
+  <article>
     <ul>
     <li>
       Место: {{ post.location }}              
@@ -19,5 +19,5 @@
     <p>
       {{ post.text|linebreaksbr }}
     </p>          
-	</article>
+  </article>
 {% endblock %}           
